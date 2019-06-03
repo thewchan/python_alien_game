@@ -87,6 +87,11 @@ class AlienInvasion:
         # This line of code below checks with bullet removal works.
         # print(len(self.bullets))
 
+        if not self.aliens:
+            # Destroy existing bullets and create new fleet.
+            self.bullets.empty()
+            self._create_fleet()
+
     def _update_aliens(self):
         """
         Check if the fleet is at an edge,
