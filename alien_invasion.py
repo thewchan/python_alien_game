@@ -89,7 +89,8 @@ class AlienInvasion:
 
     def _start_game(self):
         """Starts game."""
-        # Reset the game statistics.
+        # Reset the game statistics and game settings (difficulty).
+        self.settings.initialize_dynamic_settings()
         self.stats.reset_stats()
         self.stats.game_active = True
 
@@ -101,11 +102,11 @@ class AlienInvasion:
         self._create_fleet()
         self.ship.center_ship()
 
-        #Hide the mouse cursor.
+        # Hide the mouse cursor.
         pygame.mouse.set_visible(False)
 
     def _fire_bullet(self):
-        """Creat a new bulelt and add it to the bullets group."""
+        """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
@@ -133,9 +134,11 @@ class AlienInvasion:
             self.bullets, self.aliens, True, True)
 
         if not self.aliens:
-            # Destroy existing bullets and create new fleet.
+            # Destroy existing bullets, create new fleet,
+            #   and increase speed (difficulty).
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _update_aliens(self):
         """
